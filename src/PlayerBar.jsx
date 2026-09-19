@@ -27,6 +27,7 @@ export function PlayerBar({ player }) {
       <div className="player-bar-center">
         <div className="player-controls">
           <button
+            type="button"
             className={`player-toggle-btn${player.shuffle ? ' is-active' : ''}`}
             aria-label="Aleatorio"
             aria-pressed={player.shuffle}
@@ -34,10 +35,11 @@ export function PlayerBar({ player }) {
           >
             <IconShuffle />
           </button>
-          <button aria-label="Anterior" onClick={player.prev}>
+          <button type="button" aria-label="Anterior" onClick={player.prev}>
             <IconPrev />
           </button>
           <button
+            type="button"
             id="player-toggle"
             className={player.isPlaying ? 'is-playing' : ''}
             aria-label="Reproducir / pausar"
@@ -45,10 +47,11 @@ export function PlayerBar({ player }) {
           >
             {player.isPlaying ? <IconPause /> : <IconPlay />}
           </button>
-          <button aria-label="Siguiente" onClick={player.next}>
+          <button type="button" aria-label="Siguiente" onClick={player.next}>
             <IconNext />
           </button>
           <button
+            type="button"
             className={`player-toggle-btn${player.repeatMode !== 'off' ? ' is-active' : ''}`}
             aria-label="Repetir"
             aria-pressed={player.repeatMode !== 'off'}

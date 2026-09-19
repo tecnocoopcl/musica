@@ -9,7 +9,7 @@ export function AboutModal({ onClose }) {
       titleId="about-modal-title"
       onClose={onClose}
     >
-      <button className="about-modal-close" aria-label="Cerrar" onClick={onClose}>
+      <button type="button" className="about-modal-close" aria-label="Cerrar" onClick={onClose}>
         <span aria-hidden="true">&times;</span>
       </button>
       <h2 id="about-modal-title">¿Qué es esto?</h2>

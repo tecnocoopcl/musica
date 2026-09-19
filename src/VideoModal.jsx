@@ -9,7 +9,7 @@ export function VideoModal({ video, titulo, onClose }) {
       titleId="video-modal-title"
       onClose={onClose}
     >
-      <button className="video-modal-close" aria-label="Cerrar video" onClick={onClose}>
+      <button type="button" className="video-modal-close" aria-label="Cerrar video" onClick={onClose}>
         <span aria-hidden="true">&times;</span>
       </button>
       <p className="video-modal-titulo" id="video-modal-title">

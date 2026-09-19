@@ -2,6 +2,17 @@
   color-scheme: light dark;
 }
 
+/* Foco visible explícito para todo elemento interactivo — no depender
+   del estilo por defecto del navegador, que algunos temas/reset suprimen. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 body {
   margin: 0;
   background-color: #121212;
@@ -278,6 +289,12 @@ body {
   transform: translateY(0);
 }
 
+/* .album-card-cover clips overflow, so an outward-facing outline would
+   get cut off here — draw the ring just inside the button instead. */
+.album-card-play:focus-visible {
+  outline-offset: -2px;
+}
+
 .album-card-play svg {
   width: 1.25rem;
   height: 1.25rem;
@@ -546,6 +563,7 @@ body {
   justify-content: center;
   color: var(--spotify-text-dim);
   font-size: 0.9rem;
+  pointer-events: none;
 }
 
 .track-play {

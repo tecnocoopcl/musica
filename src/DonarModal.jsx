@@ -9,7 +9,7 @@ export function DonarModal({ href, onClose }) {
       titleId="donar-modal-title"
       onClose={onClose}
     >
-      <button className="donar-modal-close" aria-label="Cerrar" onClick={onClose}>
+      <button type="button" className="donar-modal-close" aria-label="Cerrar" onClick={onClose}>
         <span aria-hidden="true">&times;</span>
       </button>
       <h2 id="donar-modal-title">¡Gracias de antemano!</h2>
