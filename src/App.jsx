@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { catalogo } from './data/catalogo';
 import { usePlayer } from './player/usePlayer';
+import { Nav } from './Nav';
 import { AlbumGrid } from './AlbumGrid';
 import { Disco } from './Disco';
 import { PlayerBar } from './PlayerBar';
@@ -34,7 +35,9 @@ function App() {
   }
 
   return (
-    <div className="musica-app">
+    <>
+      <Nav />
+      <div className="musica-app">
       <div className="musica-titulo-row">
         <h1 className="musica-titulo">Música</h1>
         <button type="button" className="musica-titulo-info" onClick={() => setAboutOpen(true)}>
@@ -59,7 +62,8 @@ function App() {
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} />}
       {donarHref && <DonarModal href={donarHref} onClose={() => setDonarHref(null)} />}
       {video && <VideoModal video={video.src} titulo={video.titulo} onClose={() => setVideo(null)} />}
-    </div>
+      </div>
+    </>
   );
 }
 

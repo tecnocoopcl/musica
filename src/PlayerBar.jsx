@@ -13,12 +13,6 @@ export function PlayerBar({ player }) {
   const { currentTrack } = player;
   if (!currentTrack) return null;
 
-  function handleSeek(e) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const ratio = (e.clientX - rect.left) / rect.width;
-    player.seekToRatio(ratio);
-  }
-
   const progress = player.duration ? (player.currentTime / player.duration) * 100 : 0;
 
   return (
@@ -67,12 +61,17 @@ export function PlayerBar({ player }) {
         </div>
         <div className="player-progress-wrap">
           <span id="player-time-current">{formatTime(player.currentTime)}</span>
-          <progress
+          <input
+            type="range"
             id="player-progress"
-            value={progress}
+            min="0"
             max="100"
-            onClick={handleSeek}
-          ></progress>
+            step="0.1"
+            value={progress}
+            aria-label="Progreso de la canción"
+            aria-valuetext={`${formatTime(player.currentTime)} de ${formatTime(player.duration)}`}
+            onChange={(e) => player.seekToRatio(Number(e.target.value) / 100)}
+          />
           <span id="player-time-total">{formatTime(player.duration)}</span>
         </div>
       </div>

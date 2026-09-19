@@ -138,16 +138,26 @@ export function Disco({ proyecto, player, onDonar, onVideo }) {
               const isActive = player.currentTrack?.src === src;
               const isPlayingThis = isActive && player.isPlaying;
               return (
-                <li key={cancion.slug} className={`track${isActive ? ' active' : ''}`}>
-                  <span className="track-num">{i + 1}</span>
-                  <button
-                    className={`track-play${isPlayingThis ? ' is-playing' : ''}`}
-                    aria-label={`Reproducir ${cancion.titulo}`}
-                    onClick={() => player.playTrackByIndex(trackIdx)}
-                  >
-                    <IconPlay className="icon-play" />
-                    <IconPause className="icon-pause" />
-                  </button>
+                <li
+                  key={cancion.slug}
+                  className={`track${isActive ? ' active' : ''}`}
+                  aria-current={isActive ? 'true' : undefined}
+                >
+                  <span className="track-indicator">
+                    <span className="track-num" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <button
+                      type="button"
+                      className={`track-play${isPlayingThis ? ' is-playing' : ''}`}
+                      aria-label={`${isPlayingThis ? 'Pausar' : 'Reproducir'} ${cancion.titulo}`}
+                      aria-pressed={isPlayingThis}
+                      onClick={() => player.playTrackByIndex(trackIdx)}
+                    >
+                      <IconPlay className="icon-play" />
+                      <IconPause className="icon-pause" />
+                    </button>
+                  </span>
                   <span className="track-titulo">
                     {cancion.titulo}
                     {cancion.estreno && <span className="track-chip track-chip--estreno">Estreno</span>}

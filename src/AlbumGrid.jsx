@@ -8,30 +8,23 @@ export function AlbumGrid({ catalogo, onSelect, onPlayAlbum }) {
   return (
     <section className="album-grid" aria-label="Álbumes">
       {catalogo.map((proyecto) => (
-        <button
-          key={proyecto.slug}
-          className="album-card"
-          type="button"
-          onClick={() => onSelect(proyecto.slug)}
-        >
+        <div key={proyecto.slug} className="album-card">
           <div className="album-card-cover">
             <img src={proyecto.portada} alt={`Portada de ${proyecto.titulo}`} />
-            <span
+            <button
               className="album-card-play"
-              role="button"
-              tabIndex={-1}
+              type="button"
               aria-label={`Reproducir ${proyecto.titulo}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                onPlayAlbum(proyecto.slug);
-              }}
+              onClick={() => onPlayAlbum(proyecto.slug)}
             >
               <IconPlay />
-            </span>
+            </button>
           </div>
-          <p className="album-card-titulo">{tituloAlbum(proyecto)}</p>
-          <p className="album-card-sub">{proyecto.titulo}</p>
-        </button>
+          <button className="album-card-select" type="button" onClick={() => onSelect(proyecto.slug)}>
+            <p className="album-card-titulo">{tituloAlbum(proyecto)}</p>
+            <p className="album-card-sub">{proyecto.titulo}</p>
+          </button>
+        </div>
       ))}
     </section>
   );

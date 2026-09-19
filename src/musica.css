@@ -7,6 +7,61 @@ body {
   background-color: #121212;
 }
 
+.musica-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+  background-color: #121212;
+  border-bottom: 1px solid #2a2a2a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.musica-header-logo {
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.musica-header nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.musica-header nav a {
+  color: #b3b3b3;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.musica-header nav a:hover {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .musica-header {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .musica-header nav {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .musica-header nav ul {
+    width: max-content;
+  }
+}
+
 .about-modal,
 .donar-modal,
 .video-modal {
@@ -164,15 +219,23 @@ body {
   padding: 0.9rem;
   border-radius: 8px;
   background-color: var(--spotify-card);
-  text-decoration: none;
   transition: background-color 0.15s ease;
-  cursor: pointer;
-  border: none;
-  text-align: left;
 }
 
 .album-card:hover {
   background-color: var(--spotify-card-hover);
+}
+
+.album-card-select {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 
 .album-card-cover {
@@ -468,29 +531,35 @@ body {
   background-color: rgba(255, 255, 255, 0.07);
 }
 
-.track-num {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.track-indicator {
+  position: relative;
   width: 2.25rem;
   height: 2.25rem;
   margin: 0 auto;
+}
+
+.track-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--spotify-text-dim);
   font-size: 0.9rem;
 }
 
 .track-play {
-  display: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
   padding: 0;
   border: none;
   background: none;
   color: var(--spotify-text);
   cursor: pointer;
-  margin: 0 auto;
+  opacity: 0;
 }
 
 .track-play svg {
@@ -512,13 +581,15 @@ body {
 }
 
 .track:hover .track-num,
-.track.active .track-num {
-  display: none;
+.track.active .track-num,
+.track:focus-within .track-num {
+  opacity: 0;
 }
 
 .track:hover .track-play,
-.track.active .track-play {
-  display: flex;
+.track.active .track-play,
+.track-play:focus-visible {
+  opacity: 1;
 }
 
 .track-titulo {
@@ -728,7 +799,6 @@ body {
 
 #player-progress {
   flex: 1;
-  height: 0.3rem;
   accent-color: #fff;
   cursor: pointer;
 }
