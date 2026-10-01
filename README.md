@@ -17,11 +17,39 @@ npm install
 npm run dev
 ```
 
+## El catálogo: `catalogo.jsonld`
+
+Cada artista publica en su pod `musica/publico/catalogo.jsonld`, con
+vocabulario [schema.org](https://schema.org) (`MusicAlbum`, `MusicRecording`,
+`Offer`, `ListenAction`, `DonateAction`). Las rutas de audio y portadas son
+relativas al propio archivo, así la carpeta es portable:
+
+```
+<pod>/musica/publico/        ← compartida con "enlace público" desde espacio
+  catalogo.jsonld
+  audios/…
+  portadas/…
+```
+
+Nadie lo escribe a mano: lo arma el **Estudio** (`estudio.html`), el panel
+del músico que se abre dentro de espacio. Ahí se crean lanzamientos, se suben
+portadas y canciones, y se publica. `src/catalogo/formato.js` traduce entre
+ese JSON-LD y la forma que usa la interfaz.
+
+Quién es músico lo decide la cooperativa en `musicos.json` de
+`tecno-cooperativa-backend`, que además guarda la copia del catálogo que lee
+Escuchar.
+
 ## Agregar un artista
 
-Editar `src/config/artistas.js` y agregar una entrada con el nombre del
-artista y la URL de su `catalogo.jsonld`. No requiere tocar el código de la
-interfaz.
+Mientras no existe el directorio de la cooperativa, se agrega una entrada en
+`src/config/artistas.js` con la URL de su `catalogo.jsonld`.
+
+## Pruebas
+
+```bash
+npm test
+```
 
 ## Deploy
 

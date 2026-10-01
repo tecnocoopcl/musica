@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { catalogo } from './data/catalogo';
+import { artistas } from './config/artistas';
+import { useCatalogo } from './catalogo/useCatalogo';
 import { usePlayer } from './player/usePlayer';
 import { Nav } from './Nav';
 import { AlbumGrid } from './AlbumGrid';
@@ -23,7 +24,8 @@ function buildTracks(catalogo) {
 }
 
 function App() {
-  const tracks = useMemo(() => buildTracks(catalogo), []);
+  const { cargando, proyectos: catalogo, errores } = useCatalogo(artistas);
+  const tracks = useMemo(() => buildTracks(catalogo), [catalogo]);
   const player = usePlayer(tracks);
 
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -44,6 +46,13 @@ function App() {
           ¿Qué es esto?
         </button>
       </div>
+
+      {cargando && <p className="musica-estado">Cargando música…</p>}
+      {!cargando && catalogo.length === 0 && (
+        <p className="musica-estado">
+          {errores.length ? 'No se pudo cargar la música. Intenta de nuevo en un rato.' : 'Aún no hay música publicada.'}
+        </p>
+      )}
 
       <AlbumGrid catalogo={catalogo} onSelect={scrollToDisco} onPlayAlbum={player.playAlbum} />
 

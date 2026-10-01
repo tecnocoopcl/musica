@@ -1,0 +1,168 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "alebustos",
+  "itemListElement": [
+    {
+      "@type": "MusicAlbum",
+      "identifier": "male",
+      "name": "naguará",
+      "byArtist": {
+        "@type": "MusicGroup",
+        "name": "male"
+      },
+      "albumReleaseType": "SingleRelease",
+      "genre": "Folklore",
+      "datePublished": "2025",
+      "description": "Canciones con guitarra de palo.",
+      "image": "portadas/male-cover.jpg",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "tipo",
+          "value": "acustico"
+        }
+      ],
+      "potentialAction": [
+        {
+          "@type": "DonateAction",
+          "name": "mensual",
+          "target": "https://mpago.la/26cXj8R"
+        },
+        {
+          "@type": "DonateAction",
+          "name": "unico",
+          "target": "https://link.mercadopago.cl/alejandrobstsnnz"
+        }
+      ],
+      "track": [
+        {
+          "@type": "MusicRecording",
+          "identifier": "naguara",
+          "name": "naguará",
+          "audio": [
+            {
+              "@type": "AudioObject",
+              "identifier": "mp3",
+              "name": "MP3",
+              "contentUrl": "audios/naguara.mp3"
+            }
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": 1000,
+            "priceCurrency": "CLP",
+            "url": "https://mpago.la/1hJiT57"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "MusicAlbum",
+      "identifier": "siniestra",
+      "name": "Exploraciones ambientales",
+      "byArtist": {
+        "@type": "MusicGroup",
+        "name": "siniestra"
+      },
+      "albumReleaseType": "AlbumRelease",
+      "genre": "Ambient",
+      "datePublished": "2026",
+      "description": "Música ambiental electrónica.",
+      "image": "portadas/siniestra-cover.jpg",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "tipo",
+          "value": "ambiental"
+        }
+      ],
+      "potentialAction": [
+        {
+          "@type": "ListenAction",
+          "name": "Apple Music",
+          "target": "https://music.apple.com/us/album/exploraciones-ambientales-ep/6795013701?uo=4&app=music&at=1001lry3&ct=dashboard"
+        },
+        {
+          "@type": "ListenAction",
+          "name": "YouTube",
+          "target": "https://www.youtube.com/@msiniestra"
+        },
+        {
+          "@type": "DonateAction",
+          "name": "mensual",
+          "target": "https://mpago.la/2bQWwDK"
+        },
+        {
+          "@type": "DonateAction",
+          "name": "unico",
+          "target": "https://link.mercadopago.cl/alejandrobstsnnz"
+        }
+      ],
+      "track": [
+        {
+          "@type": "MusicRecording",
+          "identifier": "ambiente-001",
+          "name": "ambiente 001",
+          "audio": [
+            {
+              "@type": "AudioObject",
+              "identifier": "mp3",
+              "name": "MP3",
+              "contentUrl": "audios/ambient-001.mp3"
+            }
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": 1000,
+            "priceCurrency": "CLP",
+            "url": "https://mpago.la/2Jdf4eE"
+          }
+        },
+        {
+          "@type": "MusicRecording",
+          "identifier": "ambiente-002",
+          "name": "ambiente 002",
+          "audio": [
+            {
+              "@type": "AudioObject",
+              "identifier": "mp3",
+              "name": "MP3",
+              "contentUrl": "audios/ambient-002.mp3"
+            }
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": 1000,
+            "priceCurrency": "CLP",
+            "url": "https://mpago.la/1ZH8AaN"
+          }
+        },
+        {
+          "@type": "MusicRecording",
+          "identifier": "ambiente-003",
+          "name": "ambiente 003",
+          "audio": [
+            {
+              "@type": "AudioObject",
+              "identifier": "mp3",
+              "name": "MP3",
+              "contentUrl": "audios/ambient-003.mp3"
+            },
+            {
+              "@type": "AudioObject",
+              "identifier": "mp3-hq",
+              "name": "MP3 (alta calidad)",
+              "contentUrl": "audios/ambient-003-hq.mp3"
+            }
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": 1000,
+            "priceCurrency": "CLP"
+          }
+        }
+      ]
+    }
+  ]
+}

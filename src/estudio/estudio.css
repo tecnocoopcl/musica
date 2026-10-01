@@ -1,0 +1,304 @@
+:root {
+  color-scheme: light dark;
+  --e-bg: #ffffff;
+  --e-card: #f6f6f7;
+  --e-borde: #e2e2e5;
+  --e-texto: #1b1b1f;
+  --e-dim: #6b6b75;
+  --e-acento: #7c3aed;
+  --e-ok: #1fa971;
+  --e-error: #c6283b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --e-bg: #121212;
+    --e-card: #1c1c1f;
+    --e-borde: #2e2e33;
+    --e-texto: #f2f2f4;
+    --e-dim: #a1a1aa;
+    --e-acento: #a78bfa;
+    --e-ok: #34d399;
+    --e-error: #f87171;
+  }
+}
+
+body {
+  background: var(--e-bg);
+  color: var(--e-texto);
+}
+
+.estudio {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+}
+
+.estudio h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.estudio h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+}
+
+.estudio h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--e-dim);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.estudio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.estudio-dim {
+  color: var(--e-dim);
+}
+
+.estudio-error {
+  color: var(--e-error);
+}
+
+.estudio code {
+  font-size: 0.85em;
+  word-break: break-all;
+}
+
+.estudio-pill {
+  border: 1px solid var(--e-borde);
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--e-dim);
+  white-space: nowrap;
+}
+
+.estudio-pill--ok {
+  border-color: var(--e-ok);
+  color: var(--e-ok);
+}
+
+.estudio-seccion {
+  background: var(--e-card);
+  border: 1px solid var(--e-borde);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.estudio-boton {
+  display: inline-block;
+  background: var(--e-acento);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  font: inherit;
+  cursor: pointer;
+  margin-top: 0.75rem;
+}
+
+.estudio-boton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.estudio-boton--secundario {
+  background: transparent;
+  color: var(--e-acento);
+  border: 1px solid var(--e-acento);
+}
+
+.estudio-boton:focus-visible,
+.estudio-icono:focus-visible {
+  outline: 2px solid var(--e-acento);
+  outline-offset: 2px;
+}
+
+.estudio-plan {
+  margin-top: 0.75rem;
+}
+
+.estudio-plan progress {
+  width: 100%;
+}
+
+.estudio-lista {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.estudio-proyecto {
+  border-top: 1px solid var(--e-borde);
+  padding: 0.75rem 0;
+}
+
+.estudio-proyecto summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.estudio-portada {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--e-borde);
+  flex: none;
+}
+
+.estudio-grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.estudio-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--e-dim);
+  margin-top: 0.5rem;
+}
+
+.estudio input:not([type='file']),
+.estudio textarea,
+.estudio select {
+  font: inherit;
+  color: var(--e-texto);
+  background: var(--e-bg);
+  border: 1px solid var(--e-borde);
+  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  min-width: 0;
+}
+
+.estudio-canciones {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.estudio-canciones li {
+  margin-top: 0;
+}
+
+.estudio-enlace {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.estudio-icono {
+  background: none;
+  border: 0;
+  color: var(--e-dim);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+
+.estudio-icono:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.estudio-input-grande {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1.1rem !important;
+}
+
+.estudio-nuevo {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.estudio-nuevo .estudio-boton {
+  margin-top: 0;
+}
+
+.estudio-cuerpo {
+  padding: 0.5rem 0 0.5rem 0.25rem;
+}
+
+.estudio-portada-editor {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.estudio-portada-editor .estudio-portada {
+  width: 96px;
+  height: 96px;
+}
+
+.estudio-portada-editor .estudio-boton {
+  margin-top: 0;
+}
+
+.estudio-cancion {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr auto;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.estudio-acciones {
+  display: flex;
+  white-space: nowrap;
+}
+
+.estudio-peligro {
+  display: block;
+  margin-top: 1.5rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--e-error);
+  font: inherit;
+  cursor: pointer;
+}
+
+.estudio-barra {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: var(--e-bg);
+  border-top: 1px solid var(--e-borde);
+  padding: 0.75rem 0;
+  margin-bottom: 1rem;
+}
+
+.estudio-barra .estudio-boton {
+  margin-top: 0;
+}
+
+@media (max-width: 560px) {
+  .estudio-cancion {
+    grid-template-columns: 1fr 1fr;
+  }
+  .estudio-nuevo {
+    grid-template-columns: 1fr;
+  }
+}
