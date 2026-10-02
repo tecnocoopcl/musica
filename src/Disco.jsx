@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { IconPlay, IconPause, IconVideo } from './player/icons';
 import { formatTime } from './player/format';
 import { descargarZip } from './zipDownload';
+import { AgregarAPlaylist } from './AgregarAPlaylist';
+import { Link } from './ruta';
 
 export function Disco({ proyecto, player, onVideo, enlazarArtista }) {
-  const artista = enlazarArtista ? <a href={`/artista/${proyecto.artistaSlug}`}>{proyecto.titulo}</a> : proyecto.titulo;
+  const artista = enlazarArtista ? <Link href={`/artista/${proyecto.artistaSlug}`}>{proyecto.titulo}</Link> : proyecto.titulo;
   const [zipState, setZipState] = useState('idle'); // idle | preparando | error
   const tieneCanciones = proyecto.canciones.length > 0;
 
@@ -136,8 +138,8 @@ export function Disco({ proyecto, player, onVideo, enlazarArtista }) {
                     {cancion.estreno && <span className="track-chip track-chip--estreno">Estreno</span>}
                   </span>
 
-                  {cancion.video && (
-                    <span className="track-actions">
+                  <span className="track-actions">
+                    {cancion.video && (
                       <button
                         className="track-video"
                         type="button"
@@ -146,8 +148,9 @@ export function Disco({ proyecto, player, onVideo, enlazarArtista }) {
                       >
                         <IconVideo />
                       </button>
-                    </span>
-                  )}
+                    )}
+                    <AgregarAPlaylist cancion={{ src, titulo: cancion.titulo, artista: proyecto.titulo }} />
+                  </span>
 
                   <span className="track-duracion">{formatTime(player.durations[src])}</span>
                 </li>

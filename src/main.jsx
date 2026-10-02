@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom/client';
 
 import './index.css';
 import App from './App';
+import { iniciarSesion } from './pod/solid';
 
-// Sin router: "/" es el catálogo y "/artista/<slug>" la página de un
-// artista. En GitHub Pages, /artista/<slug> llega aquí gracias a 404.html
-// (copia de index.html). Cualquier otra ruta muestra el catálogo.
-const [seccion, slug] = window.location.pathname.split('/').filter(Boolean);
-const artistaSlug = seccion === 'artista' && slug ? decodeURIComponent(slug) : null;
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App artistaSlug={artistaSlug} />
-  </React.StrictMode>
-);
+// La sesión Solid se resuelve antes de montar: al volver del proveedor de
+// identidad la URL trae el código de login, y hay que procesarlo una sola vez.
+// Las rutas (/, /artista/<slug>, /playlist/<id>…) las maneja ruta.jsx.
+iniciarSesion().then((sesion) => {
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <App sesion={sesion} />
+    </React.StrictMode>
+  );
+});

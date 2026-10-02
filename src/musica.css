@@ -1,5 +1,15 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
+  --spotify-bg: #0f0f0f;
+  --spotify-card: #181818;
+  --spotify-card-hover: #282828;
+  --spotify-border: #2a2a2a;
+  --spotify-text: #ffffff;
+  --spotify-text-dim: #aaaaaa;
+  --spotify-accent: #bf57e9;
+  --sidebar-ancho: 15rem;
+  --player-alto: 5rem;
+  --fuente: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* Foco visible explícito para todo elemento interactivo — no depender
@@ -14,61 +24,948 @@ input:focus-visible,
 
 body {
   margin: 0;
-  background-color: #121212;
+  background-color: var(--spotify-bg);
 }
 
-.musica-header {
+/* --- Layout: barra lateral + contenido --- */
+
+.musica-app {
+  display: grid;
+  grid-template-columns: var(--sidebar-ancho) minmax(0, 1fr);
+  min-height: 100vh;
+  color: var(--spotify-text);
+  font-family: var(--fuente);
+}
+
+.principal {
+  min-width: 0;
+  background: radial-gradient(ellipse 90% 36rem at 50% -12rem, rgba(118, 62, 160, 0.32), transparent 70%);
+}
+
+.contenido {
+  padding: 0.5rem clamp(1rem, 4vw, 3rem) 3rem;
+}
+
+.con-player .contenido {
+  padding-bottom: calc(var(--player-alto) + 3rem);
+}
+
+.musica-estado {
+  color: var(--spotify-text-dim);
+}
+
+/* --- Barra lateral --- */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  box-sizing: border-box;
   display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0.75rem 1rem;
+  overflow-y: auto;
+  background-color: #030303;
+  border-right: 1px solid #1f1f1f;
+}
+
+.con-player .sidebar {
+  padding-bottom: calc(var(--player-alto) + 1rem);
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.marca {
+  padding: 0 0.75rem 1.5rem;
+}
+
+.marca-nombre {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
-  background-color: #121212;
-  border-bottom: 1px solid #2a2a2a;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-.musica-header-logo {
+  gap: 0.45rem;
   color: #fff;
-  font-weight: bold;
-  letter-spacing: 0.04em;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   text-decoration: none;
-  font-size: 0.95rem;
 }
 
-.musica-header nav ul {
+/* Un disco: anillo de acento con el centro vacío. */
+.marca-nombre::before {
+  content: '';
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%;
+  border: 0.2em solid var(--spotify-accent);
+  box-sizing: border-box;
+}
+
+.marca-leyenda {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  color: var(--spotify-text-dim);
+}
+
+.marca-leyenda a {
+  color: #d7a6f0;
+  text-underline-offset: 2px;
+}
+
+.marca-leyenda a:hover {
+  color: #fff;
+}
+
+.sidebar-nav {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.sidebar-nav-item {
   display: flex;
-  gap: 1.5rem;
-}
-
-.musica-header nav a {
-  color: #b3b3b3;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 500;
   text-decoration: none;
-  font-size: 0.9rem;
 }
 
-.musica-header nav a:hover {
+.sidebar-nav-item svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: currentColor;
+}
+
+.sidebar-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-nav-item[aria-current='page'] {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-sep {
+  margin: 1rem 0.75rem;
+  border: none;
+  border-top: 1px solid var(--spotify-border);
+}
+
+.sidebar-nueva {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 0.5rem 1rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sidebar-nueva:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.sidebar-nueva svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: currentColor;
+}
+
+.sidebar-playlists {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-playlist {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.sidebar-playlist:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-playlist[aria-current='page'] {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-playlist-nombre {
+  color: #fff;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-playlist-sub {
+  color: var(--spotify-text-dim);
+  font-size: 0.75rem;
+}
+
+.sidebar-pie {
+  margin-top: auto;
+  padding: 1rem 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.sidebar-sync {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  color: var(--spotify-text-dim);
+}
+
+.sidebar-sync::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #666;
+  flex-shrink: 0;
+}
+
+.sidebar-sync--sincronizada::before {
+  background-color: #4caf50;
+}
+
+.sidebar-sync--cargando::before,
+.sidebar-sync--guardando::before {
+  background-color: #f0b429;
+}
+
+.sidebar-sync--error::before,
+.sidebar-sync--conflicto::before {
+  background-color: #ef5350;
+}
+
+.sidebar-about {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--spotify-text-dim);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sidebar-about:hover {
   color: #fff;
 }
 
+/* --- Barra superior --- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem clamp(1rem, 4vw, 3rem);
+  background-color: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(14px);
+}
+
+.topbar-menu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.topbar-menu svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}
+
+.topbar-buscar {
+  flex: 0 1 32rem;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 2.6rem;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--spotify-text-dim);
+}
+
+.topbar-buscar:focus-within {
+  border-color: #fff;
+  background-color: #212121;
+}
+
+.topbar-buscar > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.topbar-buscar input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+/* El anillo de foco lo dibuja el contenedor (:focus-within). */
+.topbar-buscar input:focus-visible {
+  outline: none;
+}
+
+.topbar-buscar input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.topbar-buscar-limpiar {
+  display: flex;
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  color: var(--spotify-text-dim);
+  cursor: pointer;
+}
+
+.topbar-buscar-limpiar svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+
+.topbar-conectar {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #000;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.topbar-conectar:hover {
+  background-color: #e0e0e0;
+}
+
+.topbar-avatar {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--spotify-accent);
+  color: #000;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* --- Menús (Radix, se montan en <body>) --- */
+
+.menu {
+  z-index: 40;
+  min-width: 13rem;
+  max-width: 20rem;
+  padding: 0.35rem;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #212121;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-family: var(--fuente);
+}
+
+.menu-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--spotify-text-dim);
+}
+
+.menu-label strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.menu-webid {
+  word-break: break-all;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.menu-item[data-highlighted] {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item[data-disabled] {
+  color: var(--spotify-text-dim);
+  cursor: default;
+}
+
+.menu-item svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+
+.menu-item-nota {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+.menu-sep {
+  height: 1px;
+  margin: 0.35rem 0;
+  background-color: #333;
+}
+
+/* --- Conectar con WebID --- */
+
+.conectar-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.conectar-form label {
+  font-size: 0.85rem;
+  color: var(--spotify-text-dim);
+}
+
+.conectar-form input {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #121212;
+  color: #fff;
+  font: inherit;
+}
+
+.about-modal-content .conectar-error {
+  margin: 0;
+  color: #ff8a80;
+  font-size: 0.875rem;
+}
+
+.conectar-enviar {
+  align-self: flex-end;
+  margin-top: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--spotify-accent);
+  color: #000;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.conectar-enviar:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* --- Portada: chips, filas, tarjetas --- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.75rem 0 2.25rem;
+}
+
+.chip {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.chip[aria-pressed='true'] {
+  background-color: #fff;
+  color: #000;
+}
+
+.fila {
+  margin-bottom: 3rem;
+}
+
+.fila-cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.fila-cabecera h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.fila-acciones {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.fila-flecha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--spotify-border);
+  border-radius: 50%;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.fila-flecha:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.fila-flecha:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.fila-flecha svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}
+
+.fila-pista {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(9.5rem, 16vw, 13.5rem);
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  /* Deja ver el anillo de foco de las tarjetas. */
+  padding: 3px;
+  margin: -3px;
+}
+
+.fila-pista::-webkit-scrollbar {
+  display: none;
+}
+
+.fila-pista > * {
+  scroll-snap-align: start;
+}
+
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 1.5rem;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tarjeta-portada {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #222;
+}
+
+.tarjeta-portada img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.tarjeta:hover .tarjeta-portada img {
+  transform: scale(1.03);
+}
+
+.tarjeta-portada > span {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--spotify-text-dim);
+  font-size: 3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.tarjeta--artista {
+  text-align: center;
+}
+
+.tarjeta--artista .tarjeta-portada {
+  border-radius: 50%;
+}
+
+.tarjeta-play {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(0.4rem);
+  transition: opacity 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+  cursor: pointer;
+}
+
+.tarjeta:hover .tarjeta-play,
+.tarjeta-play:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.tarjeta-play:hover {
+  background-color: var(--spotify-accent);
+  color: #000;
+}
+
+/* La portada recorta: el anillo va hacia adentro. */
+.tarjeta-play:focus-visible {
+  outline-offset: -2px;
+}
+
+.tarjeta-play svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: currentColor;
+  margin-left: 2px;
+}
+
+.tarjeta-titulo {
+  display: block;
+  margin-top: 0.7rem;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tarjeta-titulo:hover {
+  text-decoration: underline;
+}
+
+.tarjeta-sub {
+  margin: 0.2rem 0 0;
+  color: var(--spotify-text-dim);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tarjeta-sub a,
+.disco-artista a,
+.track-artista a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tarjeta-sub a:hover,
+.disco-artista a:hover,
+.track-artista a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.mosaico {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+.mosaico--4 {
+  grid-template: 1fr 1fr / 1fr 1fr;
+}
+
+.mosaico img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mosaico--vacio {
+  place-items: center;
+  font-size: 3rem;
+  color: var(--spotify-text-dim);
+  background: linear-gradient(135deg, #3a2b52, #181818);
+}
+
+/* --- Vistas: biblioteca, búsqueda, artista, playlist --- */
+
+.vista-titulo {
+  margin: 0.75rem 0 1.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 800;
+}
+
+.seccion {
+  margin-bottom: 3rem;
+}
+
+.seccion > h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+}
+
+.aviso {
+  margin: 0 0 2rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid rgba(191, 87, 233, 0.35);
+  border-radius: 8px;
+  background-color: rgba(191, 87, 233, 0.1);
+  color: #ddd;
+  line-height: 1.5;
+}
+
+.cabecera {
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  margin: 1.25rem 0 2.5rem;
+}
+
+.cabecera-portada {
+  flex-shrink: 0;
+  width: clamp(9rem, 22vw, 14rem);
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #222;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.7);
+}
+
+.cabecera-portada > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cabecera-portada--redonda {
+  border-radius: 50%;
+}
+
+.cabecera-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.cabecera-info h1,
+.cabecera-nombre {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.cabecera-nombre {
+  box-sizing: border-box;
+  width: 100%;
+  margin-left: -0.35rem;
+  padding: 0 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  font-family: inherit;
+}
+
+.cabecera-nombre:hover {
+  border-color: var(--spotify-border);
+}
+
+.cabecera-nombre:focus-visible {
+  outline: none;
+  border-color: #fff;
+}
+
+.escucha-en-directo svg {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.4rem;
+  fill: currentColor;
+}
+
+.boton-favorito.is-active,
+.boton-favorito.is-active:hover {
+  border-color: var(--spotify-accent);
+  color: var(--spotify-accent);
+}
+
+.tracklist--suelta .track {
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+}
+
+.track-portada {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.tracklist--suelta .track-play {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.track-artista {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: normal;
+  color: var(--spotify-text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track--no-disponible .track-titulo {
+  color: var(--spotify-text-dim);
+}
+
+@media (max-width: 860px) {
+  .musica-app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    width: min(80vw, 18rem);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.2s ease, visibility 0.2s;
+  }
+
+  .sidebar.is-open {
+    transform: none;
+    visibility: visible;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 19;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .topbar-menu {
+    display: flex;
+  }
+}
+
 @media (max-width: 600px) {
-  .musica-header {
-    flex-wrap: wrap;
-    row-gap: 0.75rem;
-    padding: 1rem 1.25rem;
+  .topbar {
+    gap: 0.5rem;
   }
 
-  .musica-header nav {
-    width: 100%;
-    overflow-x: auto;
+  .topbar-buscar {
+    flex: 1 1 auto;
   }
 
-  .musica-header nav ul {
-    width: max-content;
+  .topbar-conectar {
+    padding: 0.5rem 0.9rem;
+  }
+
+  .topbar-conectar-extra {
+    display: none;
+  }
+
+  .cabecera {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .fila-pista {
+    gap: 1rem;
   }
 }
 
@@ -98,7 +995,7 @@ body {
   border: 1px solid #2a2a2a;
   border-radius: 8px;
   padding: 2rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--fuente);
 }
 
 .about-modal-content h2 {
@@ -134,185 +1031,6 @@ body {
   font-size: 1.25rem;
   line-height: 1;
   cursor: pointer;
-}
-
-.musica-app {
-  color-scheme: dark;
-  --spotify-bg: #121212;
-  --spotify-card: #181818;
-  --spotify-card-hover: #282828;
-  --spotify-border: #2a2a2a;
-  --spotify-text: #ffffff;
-  --spotify-text-dim: #b3b3b3;
-  --spotify-accent: #bf57e9;
-
-  padding: 2rem clamp(1.5rem, 5vw, 4rem) 8rem;
-  background-color: var(--spotify-bg);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  min-height: 100vh;
-}
-
-.musica-titulo-row {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 0 0 1.5rem;
-}
-
-.musica-titulo {
-  margin: 0;
-  color: var(--spotify-text);
-}
-
-.musica-titulo-info {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #4da3ff;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.musica-titulo-info:hover {
-  color: #7cbcff;
-}
-
-.musica-volver {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  font-size: 0.9rem;
-  color: var(--spotify-text-dim);
-  text-decoration: none;
-}
-
-.musica-volver:hover {
-  color: var(--spotify-text);
-}
-
-.musica-estado {
-  color: var(--spotify-text-dim);
-}
-
-.album-card-sub a,
-.disco-artista a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.album-card-sub a:hover,
-.disco-artista a:hover {
-  color: var(--spotify-text);
-  text-decoration: underline;
-}
-
-/* --- Grid de álbumes --- */
-
-.album-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 3rem;
-}
-
-.album-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: 0.9rem;
-  border-radius: 8px;
-  background-color: var(--spotify-card);
-  transition: background-color 0.15s ease;
-}
-
-.album-card:hover {
-  background-color: var(--spotify-card-hover);
-}
-
-.album-card-select {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: none;
-  background: none;
-  text-align: left;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-}
-
-.album-card-cover {
-  position: relative;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
-}
-
-.album-card-cover img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-
-.album-card-play {
-  position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--spotify-accent);
-  color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(0.5rem);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  cursor: pointer;
-  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.6);
-}
-
-.album-card-cover:hover .album-card-play,
-.album-card-play:focus-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* .album-card-cover clips overflow, so an outward-facing outline would
-   get cut off here — draw the ring just inside the button instead. */
-.album-card-play:focus-visible {
-  outline-offset: -2px;
-}
-
-.album-card-play svg {
-  width: 1.25rem;
-  height: 1.25rem;
-  fill: currentColor;
-  margin-left: 2px;
-}
-
-.album-card-titulo {
-  margin: 0;
-  font-weight: bold;
-  color: var(--spotify-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.album-card-sub {
-  margin: 0;
-  font-size: 0.8rem;
-  color: var(--spotify-text-dim);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* --- Vista de álbum (hero + tracklist) --- */
@@ -830,10 +1548,6 @@ body {
 }
 
 @media (max-width: 600px) {
-  .musica-app {
-    padding: 1.5rem 1rem 8rem;
-  }
-
   .disco-hero {
     flex-direction: column;
     align-items: flex-start;

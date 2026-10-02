@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
@@ -35,12 +36,15 @@ export function Modal({ wrapperClassName, backdropClassName, contentClassName, t
     };
   }, [onClose]);
 
-  return (
+  // En <body>: un ancestro con backdrop-filter o transform (la barra
+  // superior) haría que position: fixed se mida contra él y no contra la ventana.
+  return createPortal(
     <div className={wrapperClassName}>
       <div className={backdropClassName} onClick={onClose} />
       <div className={contentClassName} role="dialog" aria-modal="true" aria-labelledby={titleId} ref={contentRef}>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

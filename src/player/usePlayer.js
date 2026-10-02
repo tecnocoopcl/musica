@@ -36,6 +36,12 @@ export function usePlayer(tracks) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [durations, setDurations] = useState({});
+  // Sube cada vez que se pide reproducir algo, aunque currentIndex no cambie
+  // (p. ej. empezar otra playlist desde la posición 0).
+  const [carga, setCarga] = useState(0);
+  // Pistas de la cola actual: null es el catálogo completo; una playlist la
+  // reemplaza por sus canciones.
+  const queueBase = useRef(null);
 
   const currentTrackIdx = currentIndex !== -1 ? order[currentIndex] : -1;
 
@@ -101,7 +107,7 @@ export function usePlayer(tracks) {
     setDuration(0);
     audio.play();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex]);
+  }, [currentIndex, carga]);
 
   useEffect(() => {
     const handler = () => saveState();
@@ -131,7 +137,7 @@ export function usePlayer(tracks) {
 
   function rebuildOrder(keepCurrent, nextShuffle) {
     const useShuffle = nextShuffle ?? shuffle;
-    const base = tracks.map((_, i) => i);
+    const base = queueBase.current || tracks.map((_, i) => i);
     let nextOrder = useShuffle ? shuffleArray(base) : base;
     let nextIndex = currentIndex;
     if (keepCurrent && currentTrackIdx !== -1) {
@@ -163,25 +169,51 @@ export function usePlayer(tracks) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tracks]);
 
+  function irA(orderIndex) {
+    lastLoadedIndex.current = -1;
+    setCurrentIndex(orderIndex);
+    setCarga((c) => c + 1);
+  }
+
+  // Vuelve a la cola del catálogo completo si la actual es una playlist.
+  function ordenDelCatalogo() {
+    if (!queueBase.current) return order;
+    queueBase.current = null;
+    return rebuildOrder(false);
+  }
+
   function playTrackByIndex(trackIdx) {
-    const orderIndex = order.indexOf(trackIdx);
-    if (orderIndex === currentIndex) {
+    if (trackIdx === -1) return;
+    if (trackIdx === currentTrackIdx) {
       if (audio.paused) audio.play();
       else audio.pause();
       return;
     }
-    lastLoadedIndex.current = -1;
-    setCurrentIndex(orderIndex === -1 ? 0 : orderIndex);
+    let activeOrder = order;
+    if (!activeOrder.includes(trackIdx)) activeOrder = ordenDelCatalogo();
+    irA(activeOrder.indexOf(trackIdx));
   }
 
   function playAlbum(proyectoSlug) {
     const firstTrackIdx = tracks.findIndex((t) => t.proyectoSlug === proyectoSlug);
     if (firstTrackIdx === -1) return;
-    let activeOrder = order;
+    let activeOrder = ordenDelCatalogo();
     if (shuffle) activeOrder = rebuildOrder(false, true);
-    const orderIndex = activeOrder.indexOf(firstTrackIdx);
-    lastLoadedIndex.current = -1;
-    setCurrentIndex(orderIndex);
+    irA(activeOrder.indexOf(firstTrackIdx));
+  }
+
+  // Reproduce una lista de pistas (por src) como cola propia, empezando en
+  // `desde`. Las que ya no están en el catálogo se saltan.
+  function playQueue(srcs, desde = 0) {
+    const idxs = srcs.map((src) => tracks.findIndex((t) => t.src === src));
+    const primera = idxs[desde] ?? -1;
+    const base = idxs.filter((i) => i !== -1);
+    if (base.length === 0) return;
+    const inicio = primera !== -1 ? primera : base[0];
+    queueBase.current = base;
+    const nextOrder = shuffle ? [inicio, ...shuffleArray(base.filter((i) => i !== inicio))] : base;
+    setOrder(nextOrder);
+    irA(nextOrder.indexOf(inicio));
   }
 
   function toggle() {
@@ -191,23 +223,13 @@ export function usePlayer(tracks) {
   }
 
   function prev() {
-    if (currentIndex > 0) {
-      lastLoadedIndex.current = -1;
-      setCurrentIndex(currentIndex - 1);
-    } else if (currentIndex === 0 && repeatMode === 'all') {
-      lastLoadedIndex.current = -1;
-      setCurrentIndex(order.length - 1);
-    }
+    if (currentIndex > 0) irA(currentIndex - 1);
+    else if (currentIndex === 0 && repeatMode === 'all') irA(order.length - 1);
   }
 
   function next() {
-    if (currentIndex !== -1 && currentIndex < order.length - 1) {
-      lastLoadedIndex.current = -1;
-      setCurrentIndex(currentIndex + 1);
-    } else if (currentIndex !== -1 && repeatMode === 'all') {
-      lastLoadedIndex.current = -1;
-      setCurrentIndex(0);
-    }
+    if (currentIndex !== -1 && currentIndex < order.length - 1) irA(currentIndex + 1);
+    else if (currentIndex !== -1 && repeatMode === 'all') irA(0);
   }
 
   function toggleShuffle() {
@@ -243,6 +265,7 @@ export function usePlayer(tracks) {
     setVolume,
     playTrackByIndex,
     playAlbum,
+    playQueue,
     toggle,
     prev,
     next,

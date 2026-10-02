@@ -5,9 +5,42 @@ la música no vive en este repo: cada cuenta la publica en su propio
 [Solid Pod](https://solidproject.org/), y esta app solo la lee. El artista
 mantiene el control de su música y decide qué compartir y cómo.
 
-- `/` muestra el catálogo completo de la cooperativa.
+- `/` es la portada: buscador, artistas de la cooperativa, álbumes y tus
+  playlists.
 - `/artista/<slug>` (por ejemplo `/artista/male`, `/artista/siniestra`) es la
   página de un artista.
+- `/biblioteca` y `/playlist/<id>`: lo de quien escucha (ver abajo).
+
+Se navega sin recargar la página (`src/ruta.jsx`), así la música no se corta.
+
+## Biblioteca de quien escucha
+
+Playlists y artistas favoritos. Sin sesión se guardan en el navegador. Con
+**Conectar con WebID** (login Solid con `@inrupt/solid-client-authn-browser`,
+como por-hacer) se guardan en el pod de quien escucha:
+
+```
+<pod>/apps/musica/biblioteca.json
+```
+
+```json
+{
+  "playlists": [
+    {
+      "id": "b5c09774",
+      "name": "Para el viaje",
+      "tracks": [{ "url": "https://…/naguara.mp3", "title": "naguará", "artist": "male" }]
+    }
+  ],
+  "favoriteArtists": ["male"],
+  "updated": "2026-10-02T12:00:00.000Z"
+}
+```
+
+Al conectar, si el pod ya tiene `biblioteca.json` se usa ese; si no, se sube
+lo que había en el navegador. Las escrituras son condicionales (ETag): si otro
+dispositivo escribió antes, gana el pod y la barra lateral lo avisa. El archivo
+hereda los permisos de la carpeta en el pod; la app no publica nada.
 
 ## De dónde sale el catálogo
 
