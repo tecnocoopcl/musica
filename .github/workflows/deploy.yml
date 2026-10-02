@@ -27,6 +27,9 @@ jobs:
 
       - run: npm ci
       - run: npm run build
+      # GitHub Pages sirve 404.html para rutas que no existen: así
+      # /artista/<slug> carga la app, que lee el artista desde la URL.
+      - run: cp dist/index.html dist/404.html
 
       - uses: actions/upload-pages-artifact@v3
         with:

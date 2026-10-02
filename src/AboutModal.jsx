@@ -16,8 +16,8 @@ export function AboutModal({ onClose }) {
       <p>
         Este es el reproductor de música de tecnocoop. Aquí se publican proyectos musicales de
         distintos artistas de la cooperativa — como <strong>male</strong> y <strong>siniestra</strong> —
-        para que los puedas escuchar directamente, ver sus videos cuando existan, descargarlos
-        en distintos formatos y, si te gusta lo que escuchas, apoyarlos.
+        para que los puedas escuchar directamente, ver sus videos cuando existan y descargarlos
+        en distintos formatos.
       </p>
       <p>
         No es una plataforma de streaming ni un sello discográfico: cada artista mantiene su

@@ -73,7 +73,6 @@ body {
 }
 
 .about-modal,
-.donar-modal,
 .video-modal {
   position: fixed;
   inset: 0;
@@ -85,15 +84,13 @@ body {
 }
 
 .about-modal-backdrop,
-.donar-modal-backdrop,
 .video-modal-backdrop {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.about-modal-content,
-.donar-modal-content {
+.about-modal-content {
   position: relative;
   z-index: 1;
   width: min(90vw, 32rem);
@@ -104,19 +101,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-.donar-modal-content {
-  width: min(90vw, 26rem);
-  text-align: center;
-}
-
-.about-modal-content h2,
-.donar-modal-content h2 {
+.about-modal-content h2 {
   margin: 0 0 1rem;
   color: #fff;
 }
 
-.about-modal-content p,
-.donar-modal-content p {
+.about-modal-content p {
   margin: 0 0 1rem;
   color: #b3b3b3;
   line-height: 1.5;
@@ -131,7 +121,6 @@ body {
 }
 
 .about-modal-close,
-.donar-modal-close,
 .video-modal-close {
   position: absolute;
   top: -0.75rem;
@@ -145,27 +134,6 @@ body {
   font-size: 1.25rem;
   line-height: 1;
   cursor: pointer;
-}
-
-.donar-modal-link {
-  display: inline-block;
-  background-color: #bf57e9;
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 999px;
-  padding: 0.65rem 1.5rem;
-  font-size: 0.9rem;
-}
-
-.donar-modal-link:hover {
-  opacity: 0.9;
-}
-
-.donar-modal-volver {
-  margin: 1rem 0 0 !important;
-  font-size: 0.8rem !important;
-  color: #737373 !important;
 }
 
 .musica-app {
@@ -211,6 +179,34 @@ body {
 
 .musica-titulo-info:hover {
   color: #7cbcff;
+}
+
+.musica-volver {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--spotify-text-dim);
+  text-decoration: none;
+}
+
+.musica-volver:hover {
+  color: var(--spotify-text);
+}
+
+.musica-estado {
+  color: var(--spotify-text-dim);
+}
+
+.album-card-sub a,
+.disco-artista a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.album-card-sub a:hover,
+.disco-artista a:hover {
+  color: var(--spotify-text);
+  text-decoration: underline;
 }
 
 /* --- Grid de álbumes --- */
@@ -423,21 +419,6 @@ body {
   color: var(--spotify-text-dim);
 }
 
-.disco-apoyo-linea {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.65rem;
-  margin-top: 0.75rem;
-}
-
-.disco-apoyo-pregunta {
-  font-size: 0.85rem;
-  font-weight: bold;
-  color: var(--spotify-text);
-}
-
 .tracklist-vacia {
   padding: 0 2rem 2rem;
   color: var(--spotify-text-dim);
@@ -482,19 +463,6 @@ body {
 .pill-escucha:hover {
   color: var(--spotify-text);
   border-color: var(--spotify-accent);
-}
-
-.pill-apoyo {
-  border-color: #e0b400;
-}
-
-.pill-apoyo:hover {
-  color: var(--spotify-text);
-  border-color: #e0b400;
-}
-
-.pill-apoyo.escucha-en-directo--pronto:hover {
-  border-color: #e0b400;
 }
 
 .disco-descargar-zip:disabled {

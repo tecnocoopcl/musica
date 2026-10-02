@@ -115,7 +115,9 @@ export function usePlayer(tracks) {
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
-          trackIdx: currentTrackIdx !== -1 ? currentTrackIdx : null,
+          // Por src y no por índice: la lista cambia entre el catálogo y la
+          // página de cada artista.
+          src: currentTrackIdx !== -1 ? tracks[currentTrackIdx].src : null,
           time: audio.currentTime || 0,
           volume: audio.volume,
           shuffle,
@@ -149,9 +151,10 @@ export function usePlayer(tracks) {
     if (initialized.current || tracks.length === 0) return;
     initialized.current = true;
     const initialOrder = rebuildOrder(false, shuffle);
-    if (saved && saved.trackIdx !== null && saved.trackIdx !== undefined && tracks[saved.trackIdx]) {
-      const orderIndex = initialOrder.indexOf(saved.trackIdx);
-      const track = tracks[saved.trackIdx];
+    const savedIdx = saved?.src ? tracks.findIndex((t) => t.src === saved.src) : -1;
+    if (savedIdx !== -1) {
+      const orderIndex = initialOrder.indexOf(savedIdx);
+      const track = tracks[savedIdx];
       lastLoadedIndex.current = orderIndex;
       audio.src = track.src;
       audio.currentTime = saved.time || 0;

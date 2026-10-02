@@ -4,7 +4,7 @@ function tituloAlbum(proyecto) {
   return proyecto.album || proyecto.sencillo || proyecto.titulo;
 }
 
-export function AlbumGrid({ catalogo, onSelect, onPlayAlbum }) {
+export function AlbumGrid({ catalogo, onSelect, onPlayAlbum, enlazarArtista }) {
   return (
     <section className="album-grid" aria-label="Álbumes">
       {catalogo.map((proyecto) => (
@@ -20,10 +20,14 @@ export function AlbumGrid({ catalogo, onSelect, onPlayAlbum }) {
               <IconPlay />
             </button>
           </div>
-          <button className="album-card-select" type="button" onClick={() => onSelect(proyecto.slug)}>
-            <p className="album-card-titulo">{tituloAlbum(proyecto)}</p>
-            <p className="album-card-sub">{proyecto.titulo}</p>
-          </button>
+          <div>
+            <button className="album-card-select" type="button" onClick={() => onSelect(proyecto.slug)}>
+              <p className="album-card-titulo">{tituloAlbum(proyecto)}</p>
+            </button>
+            <p className="album-card-sub">
+              {enlazarArtista ? <a href={`/artista/${proyecto.artistaSlug}`}>{proyecto.titulo}</a> : proyecto.titulo}
+            </p>
+          </div>
         </div>
       ))}
     </section>

@@ -1,8 +1,9 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
+// base absoluta: la app también se sirve en /artista/<slug>, y con
+// rutas relativas los assets se buscarían en /artista/assets.
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [react()],
 })

@@ -3,7 +3,8 @@ import { IconPlay, IconPause, IconVideo } from './player/icons';
 import { formatTime } from './player/format';
 import { descargarZip } from './zipDownload';
 
-export function Disco({ proyecto, player, onDonar, onVideo }) {
+export function Disco({ proyecto, player, onVideo, enlazarArtista }) {
+  const artista = enlazarArtista ? <a href={`/artista/${proyecto.artistaSlug}`}>{proyecto.titulo}</a> : proyecto.titulo;
   const [zipState, setZipState] = useState('idle'); // idle | preparando | error
   const tieneCanciones = proyecto.canciones.length > 0;
 
@@ -31,7 +32,7 @@ export function Disco({ proyecto, player, onDonar, onVideo }) {
                 Álbum{proyecto.anio ? ` · ${proyecto.anio}` : ''}
               </span>
               <h2>{proyecto.album}</h2>
-              <p className="disco-artista">{proyecto.titulo}</p>
+              <p className="disco-artista">{artista}</p>
             </>
           ) : proyecto.sencillo ? (
             <>
@@ -39,7 +40,7 @@ export function Disco({ proyecto, player, onDonar, onVideo }) {
                 Sencillo{proyecto.anio ? ` · ${proyecto.anio}` : ''}
               </span>
               <h2>{proyecto.sencillo}</h2>
-              <p className="disco-artista">{proyecto.titulo}</p>
+              <p className="disco-artista">{artista}</p>
             </>
           ) : (
             <>
@@ -93,34 +94,6 @@ export function Disco({ proyecto, player, onDonar, onVideo }) {
             )}
           </div>
 
-          {proyecto.apoyo && (
-            <div className="disco-apoyo-linea">
-              <span className="disco-apoyo-pregunta">¿Te gusta lo que escuchas?</span>
-              {proyecto.apoyo.mensual ? (
-                <a className="escucha-en-directo pill-apoyo" href={proyecto.apoyo.mensual} target="_blank" rel="noopener">
-                  Aporte mensual
-                </a>
-              ) : (
-                <span className="escucha-en-directo pill-apoyo escucha-en-directo--pronto" aria-disabled="true">
-                  Aporte mensual
-                </span>
-              )}
-
-              {proyecto.apoyo.unico ? (
-                <button
-                  type="button"
-                  className="escucha-en-directo pill-apoyo"
-                  onClick={() => onDonar(proyecto.apoyo.unico)}
-                >
-                  Aporte único
-                </button>
-              ) : (
-                <span className="escucha-en-directo pill-apoyo escucha-en-directo--pronto" aria-disabled="true">
-                  Aporte único
-                </span>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
