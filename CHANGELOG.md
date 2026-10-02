@@ -4,6 +4,31 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-10-02
+
+### Added
+
+- **Conectar con WebID**: login Solid para guardar playlists y artistas
+  favoritos en el pod de quien escucha (`<pod>/apps/musica/biblioteca.json`).
+  Sin sesión se guardan en el navegador. Acepta un WebID o la URL del
+  proveedor.
+- **Playlists**: crear, renombrar, borrar, agregar canciones desde cualquier
+  disco o búsqueda, y reproducirlas como cola propia.
+- **Artistas favoritos**, desde la página de cada artista.
+- **Buscador** de canciones, álbumes y artistas.
+- `/biblioteca` y `/playlist/<id>`.
+
+### Changed
+
+- Nuevo layout: barra lateral con la marca **Música** («Integrada con
+  tecnocoop», enlazado a tecnocoop.aebn.cl), navegación y playlists; barra
+  superior con buscador y cuenta. Reemplaza el header de AEBN.
+- La portada muestra filas de artistas, álbumes y tus playlists, con filtro
+  por género cuando el catálogo los trae.
+- Navegación sin recargar la página: la música sigue sonando al cambiar de
+  vista. El catálogo se pide una sola vez y la página de artista lo filtra.
+- Los modales se montan en `<body>`.
+
 ## [0.2.0] — 2026-10-01
 
 ### Added
