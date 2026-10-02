@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMusica } from '../contexto';
 import { navegar } from '../ruta';
+import { confirmar } from '../pod/solid';
 import { PortadaPlaylist } from '../Tarjetas';
 import { ListaCanciones } from '../ListaCanciones';
 import { IconClose, IconPlay, IconTrash } from '../player/icons';
@@ -48,8 +49,8 @@ export function Playlist({ id }) {
   const srcs = playlist.canciones.map((c) => c.src);
   const n = playlist.canciones.length;
 
-  function borrar() {
-    if (!window.confirm(`¿Borrar la playlist “${playlist.nombre}”?`)) return;
+  async function borrar() {
+    if (!(await confirmar(`¿Borrar la playlist “${playlist.nombre}”?`))) return;
     biblioteca.borrarPlaylist(playlist.id);
     navegar('/biblioteca');
   }

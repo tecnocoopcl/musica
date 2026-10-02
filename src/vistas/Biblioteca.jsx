@@ -8,7 +8,12 @@ export function Biblioteca({ artistas, sesion }) {
   return (
     <>
       <h1 className="vista-titulo">Biblioteca</h1>
-      {!sesion.conectada && (
+      {!sesion.conectada && sesion.embebida && (
+        <p className="aviso">
+          Tu biblioteca está guardada solo en este dispositivo. Inicia sesión en espacio para guardarla en tu pod.
+        </p>
+      )}
+      {!sesion.conectada && !sesion.embebida && (
         <p className="aviso">
           Tu biblioteca está guardada solo en este navegador. Usa <strong>Conectar con WebID</strong> para guardarla
           en tu Solid Pod y tenerla en todos tus dispositivos.

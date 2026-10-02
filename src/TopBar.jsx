@@ -17,6 +17,9 @@ function nombreCorto(webId) {
 function Cuenta({ sesion }) {
   const [conectando, setConectando] = useState(false);
 
+  // Dentro de espacio la sesión no es nuestra: ni se conecta ni se cierra aquí.
+  if (sesion.embebida && !sesion.conectada) return null;
+
   if (!sesion.conectada) {
     return (
       <>
@@ -43,9 +46,13 @@ function Cuenta({ sesion }) {
             <span className="menu-webid">{sesion.webId}</span>
           </DropdownMenu.Label>
           <DropdownMenu.Separator className="menu-sep" />
-          <DropdownMenu.Item className="menu-item" onSelect={() => desconectar().then(() => window.location.reload())}>
-            Desconectar
-          </DropdownMenu.Item>
+          {sesion.embebida ? (
+            <DropdownMenu.Label className="menu-label">Tu sesión la gestiona espacio</DropdownMenu.Label>
+          ) : (
+            <DropdownMenu.Item className="menu-item" onSelect={() => desconectar().then(() => window.location.reload())}>
+              Desconectar
+            </DropdownMenu.Item>
+          )}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
