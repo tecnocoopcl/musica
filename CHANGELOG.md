@@ -4,6 +4,24 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-10-03
+
+### Added
+
+- **Integración con espacio**: abierta dentro del escritorio de la
+  cooperativa, la app usa la SDK de espacio (vendorizada en
+  `src/vendor/espacio-sdk/`, como en por-hacer). La biblioteca se guarda en
+  el pod del socio con la sesión de espacio, sin login propio, en la misma
+  ruta (`<pod>/apps/musica/biblioteca.json`). Suelta, en musica.aebn.cl, todo
+  sigue igual.
+
+### Changed
+
+- Dentro de espacio no aparecen «Conectar» ni «Desconectar»: la sesión la
+  gestiona el escritorio, y si cambia allí la app se recarga.
+- Borrar una playlist pide confirmación con el diálogo de espacio cuando está
+  embebida: `window.confirm` no funciona en su iframe.
+
 ## [0.3.0] — 2026-10-02
 
 ### Added
