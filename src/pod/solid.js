@@ -115,7 +115,12 @@ export async function bibliotecaUrl(webId) {
   // Dentro de espacio la ruta la decide el escritorio, desde el pim:storage
   // real del socio; leer el perfil quedaría fuera del alcance permitido.
   if (espacio()) return espacio().paths.app('biblioteca.json');
-  const [pod] = await getPodUrlAll(webId, { fetch: solidFetch });
+  // El perfil se lee aquí y se le pasa ya leído: getPodUrlAll de
+  // solid-client 1.23 lo pide con el fetch de cross-fetch, que en el
+  // navegador es window.fetch sin su `this`, y revienta con "Can only call
+  // Window.fetch on instances of Window" (Safari) o "Illegal invocation".
+  const webIdProfile = await getSolidDataset(webId, { fetch: solidFetch });
+  const [pod] = await getPodUrlAll(webId, { fetch: solidFetch, webIdProfile });
   if (!pod) {
     throw new Error(`El perfil ${webId} no declara pim:storage; no se sabe dónde está tu pod.`);
   }
