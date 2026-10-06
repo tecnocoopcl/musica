@@ -20,7 +20,7 @@ Playlists y artistas favoritos. Sin sesión se guardan en el navegador. Con
 como por-hacer) se guardan en el pod de quien escucha:
 
 ```
-<pod>/apps/musica/biblioteca.json
+<pod>/Aplicaciones/musica/biblioteca.json
 ```
 
 ```json
@@ -46,11 +46,11 @@ hereda los permisos de la carpeta en el pod; la app no publica nada.
 
 ```
 pod de la cuenta                           tecno-cooperativa-backend           esta app
-<pod>/apps/estudio/data/catalogo.json  →   GET /musica/artists             →   /
+<pod>/Aplicaciones/estudio/data/catalogo.json  →   GET /musica/artists             →   /
                         audios/, portadas/  GET /musica/artists/{slug}      →   /artista/<slug>
 ```
 
-- **Pod**: en `<pod>/apps/estudio/data/` (misma convención que por-hacer) van
+- **Pod**: en `<pod>/Aplicaciones/estudio/data/` van
   `catalogo.json`, los audios y las portadas, con lectura pública (`.acl`).
   Las rutas dentro de `catalogo.json` son relativas a ese archivo. Lo escribe
   la app **Estudio** de espacio.
@@ -120,7 +120,7 @@ ALLOWED_ORIGINS=http://localhost:5173 go run .
 ## Agregar una cuenta
 
 Desde espacio: abrir **Estudio** y apretar "Activar estudio". Eso deja
-`<pod>/apps/estudio/data/` con lectura pública y pide el alta a la API; cada
+`<pod>/Aplicaciones/estudio/data/` con lectura pública y pide el alta a la API; cada
 guardado en Estudio se publica al momento.
 
 A mano (cuentas anteriores a Estudio): subir `catalogo.json`, audios y

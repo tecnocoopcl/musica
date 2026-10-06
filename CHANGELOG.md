@@ -4,6 +4,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- La biblioteca pasa de `apps/musica/biblioteca.json` a
+  `Aplicaciones/musica/biblioteca.json`, la convención de carpetas de
+  espacio. Suelta, la app la copia la primera vez antes de leerla (así no la
+  pisa lo guardado en el navegador); dentro de espacio la copia el
+  escritorio. La carpeta vieja no se borra.
+- El catálogo de Estudio ahora vive en `Aplicaciones/estudio/data/`; el
+  backend lo busca ahí y, si no, en la ruta vieja.
+
 ## [0.4.0] — 2026-10-03
 
 ### Added

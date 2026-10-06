@@ -13,7 +13,7 @@ import { getPodUrlAll, getSolidDataset, getThing, getUrlAll } from '@inrupt/soli
 //   solid-client-authn-browser. Sin sesión la app funciona igual: la
 //   biblioteca queda en el navegador.
 // - **Dentro de espacio**: el escritorio ya tiene la sesión del socio y presta
-//   un fetch acotado a <pod>/apps/musica/ (main.jsx deja la conexión en
+//   un fetch acotado a <pod>/Aplicaciones/musica/ (main.jsx deja la conexión en
 //   window.__espacio). No hay login propio: el redirect al proveedor ni
 //   siquiera podría cargarse en el iframe.
 
@@ -22,9 +22,12 @@ export const PROVEEDOR_POR_DEFECTO = 'https://pods-rpi-tc.aebn.cl';
 const SOLID_OIDC_ISSUER = 'http://www.w3.org/ns/solid/terms#oidcIssuer';
 const VOLVER_KEY = 'musica-volver-a';
 
-// Dónde queda la biblioteca dentro del pod. No va en apps/estudio/data/:
-// eso es el catálogo público del artista, y esto es de quien escucha.
-const BIBLIOTECA_PATH = 'apps/musica/biblioteca.json';
+// Dónde queda la biblioteca dentro del pod, según la convención de carpetas
+// de espacio. No va con el catálogo de Estudio (Aplicaciones/estudio/data/):
+// eso es lo público del artista, y esto es de quien escucha.
+const BIBLIOTECA_PATH = 'Aplicaciones/musica/biblioteca.json';
+// Donde estaba antes de esa convención.
+const BIBLIOTECA_PATH_VIEJA = 'apps/musica/biblioteca.json';
 
 const espacio = () => window.__espacio ?? null;
 
@@ -116,7 +119,29 @@ export async function bibliotecaUrl(webId) {
   if (!pod) {
     throw new Error(`El perfil ${webId} no declara pim:storage; no se sabe dónde está tu pod.`);
   }
-  return (pod.endsWith('/') ? pod : `${pod}/`) + BIBLIOTECA_PATH;
+  const raiz = pod.endsWith('/') ? pod : `${pod}/`;
+  // Antes de devolver la URL nueva: si ahí no hay nada, quien la usa sube lo
+  // del navegador, y eso pisaría la biblioteca que estaba en la carpeta vieja.
+  await migrarBiblioteca(raiz + BIBLIOTECA_PATH_VIEJA, raiz + BIBLIOTECA_PATH);
+  return raiz + BIBLIOTECA_PATH;
+}
+
+// Copia la biblioteca de la carpeta vieja a la nueva, una vez. Dentro de
+// espacio lo hace el escritorio; suelta, la app. Copia y no mueve, y nunca
+// pisa la nueva si ya existe (If-None-Match).
+async function migrarBiblioteca(vieja, nueva) {
+  try {
+    if ((await solidFetch(nueva, { method: 'HEAD', cache: 'no-store' })).ok) return;
+    const res = await solidFetch(vieja, { headers: { Accept: 'application/json' }, cache: 'no-store' });
+    if (!res.ok) return;
+    await solidFetch(nueva, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'If-None-Match': '*' },
+      body: await res.text(),
+    });
+  } catch (err) {
+    console.warn(`No se pudo copiar la biblioteca a la carpeta nueva: ${err.message}`);
+  }
 }
 
 export class ConflictoPod extends Error {

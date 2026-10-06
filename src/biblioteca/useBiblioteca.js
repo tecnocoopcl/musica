@@ -24,7 +24,7 @@ function guardarLocal(biblioteca) {
 // Playlists y artistas favoritos de quien escucha.
 //
 // Sin sesión viven en el navegador. Con sesión, el pod manda: al conectar se
-// lee <pod>/apps/musica/biblioteca.json (si no existe, se sube lo que había en
+// lee <pod>/Aplicaciones/musica/biblioteca.json (si no existe, se sube lo que había en
 // el navegador) y cada cambio se escribe ahí. El navegador queda como copia.
 //
 // sync: 'local' | 'cargando' | 'sincronizada' | 'guardando' | 'conflicto' | 'error'
