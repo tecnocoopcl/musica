@@ -4,6 +4,21 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+## [0.5.2] — 2026-10-08
+
+### Fixed
+
+- Dentro de espacio, la biblioteca alternaba entre «error» y «conflicto» y
+  se perdían cambios. Al guardar sobre `biblioteca.json` ya existente,
+  Community Solid Server responde 205 Reset Content, y la copia de la SDK
+  de espacio fallaba al armar esa respuesta («Response with null body
+  status cannot have body») aunque el pod sí había guardado. La biblioteca
+  quedaba en «error» con el ETag viejo; el siguiente cambio mandaba ese
+  ETag, recibía 412, se marcaba «conflicto» y se cargaba la versión del pod,
+  descartando ese cambio. Se actualizó la copia de la SDK
+  (`src/vendor/espacio-sdk/`), que ahora trata 205 como respuesta sin
+  cuerpo. Fuera de espacio no pasaba.
+
 ## [0.5.1] — 2026-10-06
 
 ### Fixed
