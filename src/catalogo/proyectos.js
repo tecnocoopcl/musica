@@ -19,6 +19,9 @@ function proyecto(artista, album) {
     // Único en la página: dos artistas pueden tener álbumes con el mismo slug.
     slug: `${artista.slug}-${album.slug}`,
     artistaSlug: artista.slug,
+    // Para anotar las escuchas: la clave es cuenta/artista/disco/pista.
+    cuenta: artista.account,
+    discoSlug: album.slug,
     titulo: artista.name,
     ...(album.type === 'album' && { album: album.title }),
     ...(album.type === 'single' && { sencillo: album.title }),

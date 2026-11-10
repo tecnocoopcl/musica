@@ -26,6 +26,9 @@ function buildTracks(catalogo) {
       proyectoTitulo: proyecto.titulo,
       artistaSlug: proyecto.artistaSlug,
       portada: proyecto.portada,
+      cuenta: proyecto.cuenta,
+      discoSlug: proyecto.discoSlug,
+      pistaSlug: cancion.slug,
     }))
   );
 }

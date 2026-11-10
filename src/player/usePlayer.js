@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { anotarEscucha } from './anotarEscucha';
+import { seguimiento } from './escuchas';
 
 const STORAGE_KEY = 'musica-player-state';
 
@@ -19,7 +21,8 @@ function loadSavedState() {
   }
 }
 
-// tracks: array de { src, titulo, proyectoTitulo, proyectoSlug, portada }
+// tracks: array de { src, titulo, proyectoTitulo, proyectoSlug, portada,
+// cuenta, artistaSlug, discoSlug, pistaSlug }
 export function usePlayer(tracks) {
   const audioRef = useRef(null);
   if (!audioRef.current) audioRef.current = new Audio();
@@ -93,6 +96,33 @@ export function usePlayer(tracks) {
     };
   }, [audio, order, repeatMode]);
 
+  // Escuchas (ADR-032 de espacio): cada pista cuenta una vez al oír 30 s o el
+  // 80 %, sin sumar los saltos. Se sigue con sus propios oyentes del audio
+  // para no tocar los de la reproducción. Al repetir la misma pista (repeat
+  // one) vuelve a contar: el backend ya descarta repeticiones seguidas.
+  const pistaSonando = useRef(null);
+  const oido = useRef(seguimiento());
+  useEffect(() => {
+    const desde = () => oido.current.desde(audio.currentTime);
+    const alAvanzar = () => {
+      if (oido.current.avanzar(audio.currentTime, audio.duration)) anotarEscucha(pistaSonando.current);
+    };
+    const alTerminar = () => {
+      oido.current = seguimiento();
+      oido.current.desde(0);
+    };
+    audio.addEventListener('play', desde);
+    audio.addEventListener('seeked', desde);
+    audio.addEventListener('timeupdate', alAvanzar);
+    audio.addEventListener('ended', alTerminar);
+    return () => {
+      audio.removeEventListener('play', desde);
+      audio.removeEventListener('seeked', desde);
+      audio.removeEventListener('timeupdate', alAvanzar);
+      audio.removeEventListener('ended', alTerminar);
+    };
+  }, [audio]);
+
   // Carga la pista cuando cambia currentIndex, y avanza al siguiente track
   // tras el `ended` de arriba (que solo actualiza el índice).
   const lastLoadedIndex = useRef(-1);
@@ -102,6 +132,9 @@ export function usePlayer(tracks) {
     const track = tracks[trackIdx];
     if (!track) return;
     lastLoadedIndex.current = currentIndex;
+    pistaSonando.current = track;
+    oido.current = seguimiento();
+    oido.current.desde(0);
     audio.src = track.src;
     setCurrentTime(0);
     setDuration(0);
@@ -162,6 +195,8 @@ export function usePlayer(tracks) {
       const orderIndex = initialOrder.indexOf(savedIdx);
       const track = tracks[savedIdx];
       lastLoadedIndex.current = orderIndex;
+      pistaSonando.current = track;
+      oido.current = seguimiento();
       audio.src = track.src;
       audio.currentTime = saved.time || 0;
       setCurrentIndex(orderIndex);

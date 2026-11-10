@@ -4,6 +4,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- **Escuchas** (ADR-032 de espacio): una canción cuenta al oír 30 s o el 80 %
+  de la pista, lo que llegue antes (adelantar no suma), y se suma al contador
+  anónimo de la cooperativa (`POST /musica/escuchas`). Es lo que Estudio le
+  muestra a cada músico. Requiere la versión de tecno-cooperativa-backend con
+  `/musica/escuchas`.
+
 ## [0.5.2] — 2026-10-08
 
 ### Fixed
