@@ -12,6 +12,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
   muestra a cada músico. Requiere la versión de tecno-cooperativa-backend con
   `/musica/escuchas`.
 
+### Changed
+
+- La paleta es la de espacio (ADR-034 de espacio): `tema.css` viene con la SDK
+  0.4.0 y los colores de la app (`--spotify-*`) pasan a ser alias de `--esp-*`.
+  Dentro de espacio se aplica el tema que eligió el socio, claro u oscuro.
+
 ## [0.5.2] — 2026-10-08
 
 ### Fixed
