@@ -24,6 +24,7 @@ function buildTracks(catalogo) {
       titulo: cancion.titulo,
       proyectoSlug: proyecto.slug,
       proyectoTitulo: proyecto.titulo,
+      disco: proyecto.album || proyecto.sencillo,
       artistaSlug: proyecto.artistaSlug,
       portada: proyecto.portada,
       cuenta: proyecto.cuenta,

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { anotarEscucha } from './anotarEscucha';
 import { seguimiento } from './escuchas';
+import { metadatosDe } from './sesionMultimedia';
 
 const STORAGE_KEY = 'musica-player-state';
 
@@ -21,7 +22,7 @@ function loadSavedState() {
   }
 }
 
-// tracks: array de { src, titulo, proyectoTitulo, proyectoSlug, portada,
+// tracks: array de { src, titulo, proyectoTitulo, disco, proyectoSlug, portada,
 // cuenta, artistaSlug, discoSlug, pistaSlug }
 export function usePlayer(tracks) {
   const audioRef = useRef(null);
@@ -141,6 +142,37 @@ export function usePlayer(tracks) {
     audio.play();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, carga]);
+
+  // Pantalla bloqueada y centro de control: título, artista, disco y
+  // portada de lo que suena (las portadas del pod se leen sin sesión, así que
+  // el sistema las puede bajar por su cuenta).
+  const pistaActual = currentTrackIdx !== -1 ? tracks[currentTrackIdx] : null;
+  useEffect(() => {
+    if (!('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
+    const datos = metadatosDe(pistaActual, location.href);
+    navigator.mediaSession.metadata = datos ? new MediaMetadata(datos) : null;
+  }, [pistaActual]);
+
+  // Sus controles. Se rehacen en cada render: prev y next dependen de la cola.
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return;
+    const acciones = {
+      play: () => audio.play(),
+      pause: () => audio.pause(),
+      previoustrack: prev,
+      nexttrack: next,
+      seekto: (e) => {
+        if (Number.isFinite(e.seekTime)) audio.currentTime = e.seekTime;
+      },
+    };
+    for (const [accion, fn] of Object.entries(acciones)) {
+      try {
+        navigator.mediaSession.setActionHandler(accion, fn);
+      } catch {
+        // Acción no soportada en este navegador.
+      }
+    }
+  });
 
   useEffect(() => {
     const handler = () => saveState();
