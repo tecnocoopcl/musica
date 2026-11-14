@@ -16,6 +16,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 - El sitio se sirve en `musica.tecnocooperativa.cl` y lee la API de la
   cooperativa en `api-tc.aebn.cl` (antes `status-tc.aebn.cl`).
+- La leyenda del lateral dice «Una plataforma tecnocooperativa» y enlaza a
+  `tecnocooperativa.cl` (antes «Integrada con tecnocoop», a `tecnocoop.aebn.cl`).
 - **Se parece a Inicio de espacio** y deja de imitar a YouTube Music: el fondo
   de tres manchas que derivan (quieto con «reducir movimiento», sin manchas en
   alto contraste), cada sección en un panel translúcido, la portada abre con

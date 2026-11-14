@@ -38,9 +38,9 @@ export function Sidebar({ ruta, abierta, onCerrar, onAbout }) {
             Música
           </Link>
           <p className="marca-leyenda">
-            Integrada con{' '}
-            <a href="https://tecnocoop.aebn.cl" target="_blank" rel="noopener">
-              tecnocoop
+            Una plataforma{' '}
+            <a href="https://tecnocooperativa.cl" target="_blank" rel="noopener">
+              tecnocooperativa
             </a>
           </p>
         </div>
