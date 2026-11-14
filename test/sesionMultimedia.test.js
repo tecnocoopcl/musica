@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { metadatosDe } from '../src/player/sesionMultimedia.js';
 
-const BASE = 'https://musica.aebn.cl/';
+const BASE = 'https://musica.tecnocooperativa.cl/';
 
 test('sin pista no hay metadatos', () => {
   assert.equal(metadatosDe(null, BASE), null);
@@ -23,7 +23,7 @@ test('título, artista, disco y portada con su tipo', () => {
 
 test('una portada relativa se vuelve absoluta', () => {
   const m = metadatosDe({ titulo: 'x', portada: '/portadas/a.png' }, BASE);
-  assert.deepEqual(m.artwork, [{ src: 'https://musica.aebn.cl/portadas/a.png', type: 'image/png' }]);
+  assert.deepEqual(m.artwork, [{ src: 'https://musica.tecnocooperativa.cl/portadas/a.png', type: 'image/png' }]);
 });
 
 test('sin portada, artwork vacío', () => {

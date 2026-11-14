@@ -14,6 +14,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ### Changed
 
+- El sitio se sirve en `musica.tecnocooperativa.cl` y lee la API de la
+  cooperativa en `api-tc.aebn.cl` (antes `status-tc.aebn.cl`).
 - La paleta es la de espacio (ADR-034 de espacio): `tema.css` viene con la SDK
   0.4.0 y los colores de la app (`--spotify-*`) pasan a ser alias de `--esp-*`.
   Dentro de espacio se aplica el tema que eligió el socio, claro u oscuro.

@@ -9,7 +9,7 @@ import { getPodUrlAll, getSolidDataset, getThing, getUrlAll } from '@inrupt/soli
 
 // Dos formas de tener sesión, como por-hacer:
 //
-// - **Suelta** (musica.aebn.cl): sesión Solid propia con
+// - **Suelta** (musica.tecnocooperativa.cl): sesión Solid propia con
 //   solid-client-authn-browser. Sin sesión la app funciona igual: la
 //   biblioteca queda en el navegador.
 // - **Dentro de espacio**: el escritorio ya tiene la sesión del socio y presta
