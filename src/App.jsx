@@ -117,6 +117,11 @@ function App({ sesion }) {
   return (
     <MusicaContext.Provider value={{ player, biblioteca, tracksPorSrc }}>
       <div className={`musica-app${player.currentTrack ? ' con-player' : ''}`}>
+        <div className="fondo" aria-hidden="true">
+          <span className="fondo__mancha fondo__mancha--a" />
+          <span className="fondo__mancha fondo__mancha--b" />
+          <span className="fondo__mancha fondo__mancha--c" />
+        </div>
         <Sidebar
           ruta={ruta}
           abierta={menuAbierto}

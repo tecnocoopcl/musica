@@ -16,6 +16,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 - El sitio se sirve en `musica.tecnocooperativa.cl` y lee la API de la
   cooperativa en `api-tc.aebn.cl` (antes `status-tc.aebn.cl`).
+- **Se parece a Inicio de espacio** y deja de imitar a YouTube Music: el fondo
+  de tres manchas que derivan (quieto con «reducir movimiento», sin manchas en
+  alto contraste), cada sección en un panel translúcido, la portada abre con
+  un saludo y los títulos van en peso regular. Lateral, buscador, botones,
+  diálogos y barra del reproductor siguen la tabla de ADR-034. Los artistas
+  dejan de ser círculos.
+- **Filtro por géneros**: se separan por comas («rock, psicodelico» son dos) y
+  el filtro solo aparece, con su etiqueta, cuando hay al menos dos géneros en
+  al menos dos discos. Antes un único disco con género dejaba un botón suelto
+  sin explicación.
 - La paleta es la de espacio (ADR-034 de espacio): `tema.css` viene con la SDK
   0.4.0 y los colores de la app (`--spotify-*`) pasan a ser alias de `--esp-*`.
   Dentro de espacio se aplica el tema que eligió el socio, claro u oscuro.
