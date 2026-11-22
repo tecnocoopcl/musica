@@ -14,6 +14,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ### Changed
 
+- La API de la cooperativa pasa de `api-tc.aebn.cl` a `api.tecnocooperativa.cl`.
 - El sitio se sirve en `musica.tecnocooperativa.cl` y lee la API de la
   cooperativa en `api-tc.aebn.cl` (antes `status-tc.aebn.cl`).
 - La leyenda del lateral dice «Una plataforma tecnocooperativa» y enlaza a
