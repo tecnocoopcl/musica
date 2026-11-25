@@ -10,14 +10,14 @@ test('sin pista no hay metadatos', () => {
 
 test('título, artista, disco y portada con su tipo', () => {
   const m = metadatosDe(
-    { titulo: 'male', proyectoTitulo: 'Ana', disco: 'Raíces', portada: 'https://pod.aebn.cl/ana/portadas/raices.jpg' },
+    { titulo: 'male', proyectoTitulo: 'Ana', disco: 'Raíces', portada: 'https://pod.tecnocooperativa.cl/ana/portadas/raices.jpg' },
     BASE
   );
   assert.deepEqual(m, {
     title: 'male',
     artist: 'Ana',
     album: 'Raíces',
-    artwork: [{ src: 'https://pod.aebn.cl/ana/portadas/raices.jpg', type: 'image/jpeg' }],
+    artwork: [{ src: 'https://pod.tecnocooperativa.cl/ana/portadas/raices.jpg', type: 'image/jpeg' }],
   });
 });
 

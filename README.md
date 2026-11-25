@@ -65,7 +65,7 @@ Formato de `catalogo.json` (keys en inglés, datos en el idioma del artista):
 
 ```json
 {
-  "account": "usuario-aebn",
+  "account": "aebn",
   "artists": [
     {
       "slug": "male",

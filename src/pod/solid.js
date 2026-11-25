@@ -17,7 +17,7 @@ import { getPodUrlAll, getSolidDataset, getThing, getUrlAll } from '@inrupt/soli
 //   window.__espacio). No hay login propio: el redirect al proveedor ni
 //   siquiera podría cargarse en el iframe.
 
-export const PROVEEDOR_POR_DEFECTO = 'https://pods-rpi-tc.aebn.cl';
+export const PROVEEDOR_POR_DEFECTO = 'https://pods.tecnocooperativa.cl';
 
 const SOLID_OIDC_ISSUER = 'http://www.w3.org/ns/solid/terms#oidcIssuer';
 const VOLVER_KEY = 'musica-volver-a';

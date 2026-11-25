@@ -2,7 +2,7 @@
 // oídos o al 80 % de la pista, lo que llegue antes. Solo suma lo que de
 // verdad sonó: adelantar o saltar no cuenta, y en pausa no avanza.
 //
-// Es la misma lógica que audioteca.aebn.cl (src/escuchas.js) con otro umbral:
+// Es la misma lógica que audioteca.tecnocooperativa.cl (src/escuchas.js) con otro umbral:
 // allá una charla cuenta al 80 % o a los 5 min.
 //
 // Sin React ni DOM, para probarlo con `node --test`.

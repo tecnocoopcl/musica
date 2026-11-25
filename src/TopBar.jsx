@@ -4,7 +4,7 @@ import { ConectarModal } from './ConectarModal';
 import { desconectar } from './pod/solid';
 import { IconMenu, IconSearch, IconClose } from './player/icons';
 
-// "usuario-aebn" de https://pods-rpi-tc.aebn.cl/usuario-aebn/profile/card#me
+// "aebn" de https://pods.tecnocooperativa.cl/aebn/profile/card#me
 function nombreCorto(webId) {
   try {
     const url = new URL(webId);
